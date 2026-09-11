@@ -1,0 +1,204 @@
+/* 两页共用大窗口，导航栏位置改变时正文仍使用同一块空间。 */
+dialog#yakit-map-panel {
+  --yakit-view-duration: 240ms;
+  --yakit-view-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: min(1280px, 96vw);
+  height: min(820px, calc(100dvh - 32px));
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--yakit-border);
+  border-radius: var(--yakit-radius-window);
+  background: var(--yakit-bg);
+  color: var(--yakit-text);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+#yakit-map-panel:not([open]) { display: none; }
+#yakit-map-panel [hidden] { display: none !important; }
+#yakit-map-panel::backdrop { background: rgba(0, 0, 0, 0.35); }
+#yakit-map-panel .yakit-panel__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  flex: 0 0 56px;
+  gap: 12px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--yakit-border);
+}
+/* 标题栏沿用纪实的图标列和字号，长名称在关闭按钮前省略。 */
+#yakit-map-panel .yakit-header-navigation {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 12px;
+}
+#yakit-map-panel .yakit-brand-icon { width: 24px; height: 24px; justify-self: center; }
+#yakit-map-panel .yakit-panel__title {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32px;
+}
+#yakit-map-panel .yakit-panel__header > .yakit-icon-btn { flex-shrink: 0; }
+#yakit-map-panel .yakit-panel__body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 20px 24px;
+  gap: 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--yakit-border) transparent;
+}
+#yakit-map-panel .yakit-icon { color: var(--yakit-text-sub); }
+#yakit-map-panel .yakit-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  color: var(--yakit-text-sub);
+  cursor: pointer;
+}
+#yakit-map-panel .yakit-icon-btn:hover { background: var(--yakit-card-hover); color: var(--yakit-text); }
+#yakit-map-panel :is(button, [tabindex]):focus-visible {
+  outline: 2px solid var(--yakit-accent);
+  outline-offset: -2px;
+}
+/* 原生按钮保留键盘操作，外观沿用酒馆的扩展菜单项。 */
+#yakit-map-menu-entry {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  width: 100%;
+  padding: 5px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+#yakit-map-menu-entry:focus-visible { opacity: 1; outline: 2px solid currentColor; outline-offset: -2px; }
+#yakit-map-menu-entry .yakit-icon { color: inherit; flex-shrink: 0; }
+#yakit-map-menu-entry .yakit-map-menu-icon { width: 20px; height: 20px; }
+#yakit-map-menu-entry .yakit-map-menu-icon,
+#yakit-map-panel .yakit-map-menu-icon {
+  background-color: currentColor;
+  -webkit-mask: url('../icons/map.svg') center / contain no-repeat;
+  mask: url('../icons/map.svg') center / contain no-repeat;
+}
+
+/* 分段导航沿用纪实的尺寸，滑块由共用样式控制。 */
+#yakit-map-panel .yakit-segmented {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  max-width: 440px;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--yakit-input);
+}
+#yakit-map-panel .yakit-navigation {
+  position: relative;
+  grid-template-columns: repeat(var(--yakit-navigation-count), minmax(0, 1fr));
+  flex-shrink: 0;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  margin: 12px 24px 0;
+}
+#yakit-map-panel[data-navigation-style="bottom"] .yakit-navigation { order: 1; margin-block: 0 12px; }
+#yakit-map-panel .yakit-pill {
+  box-sizing: border-box;
+  height: 28px;
+  min-height: 28px;
+  min-width: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--yakit-text-sub);
+  font: inherit;
+  font-size: 12px;
+  line-height: 28px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+#yakit-map-panel .yakit-navigation > .yakit-pill { position: relative; grid-row: 1; }
+#yakit-map-panel .yakit-navigation > [aria-selected="true"] { color: #35372F; }
+#yakit-map-panel .yakit-navigation > [aria-selected="false"]:hover { background: var(--yakit-card-hover); }
+
+#yakit-map-panel .yakit-map-viewport { flex: 1; min-height: 0; overflow: hidden; }
+#yakit-map-panel .yakit-map-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transform: translateX(0);
+  transition: transform var(--yakit-view-duration) var(--yakit-view-easing);
+}
+#yakit-map-panel[data-view="settings"] .yakit-map-track { transform: translateX(-50%); }
+#yakit-map-panel .yakit-map-track > .yakit-panel__body {
+  box-sizing: border-box;
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+  height: 100%;
+}
+
+/* 进出场复用纪实的关键帧，与切页保持相同时长。 */
+dialog#yakit-map-panel[open] { animation: yakit-panel-enter var(--yakit-view-duration) ease-out; }
+dialog#yakit-map-panel[open]::backdrop { animation: yakit-backdrop-enter var(--yakit-view-duration) ease-out; }
+dialog#yakit-map-panel.yakit-panel--closing { animation: yakit-panel-exit var(--yakit-view-duration) ease-in both; }
+dialog#yakit-map-panel.yakit-panel--closing::backdrop { animation: yakit-backdrop-exit var(--yakit-view-duration) ease-in both; }
+
+/* 手机标题栏固定保留顶部安全区，底部安全区随导航位置分配。 */
+@media (max-width: 600px) {
+  dialog#yakit-map-panel { width: 100%; height: 100dvh; border: 0; border-radius: 0; }
+  #yakit-map-panel .yakit-panel__header {
+    height: calc(56px + env(safe-area-inset-top));
+    flex-basis: calc(56px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+    gap: 8px;
+  }
+  #yakit-map-panel .yakit-panel__body {
+    padding: 14px max(14px, env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+  #yakit-map-panel .yakit-header-navigation { gap: 8px; }
+  #yakit-map-panel .yakit-navigation {
+    margin-inline: max(14px, env(safe-area-inset-left)) max(14px, env(safe-area-inset-right));
+  }
+  #yakit-map-panel[data-navigation-style="bottom"] .yakit-navigation { margin-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  #yakit-map-panel[data-navigation-style="bottom"] .yakit-panel__body { padding-bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog#yakit-map-panel[open],
+  dialog#yakit-map-panel[open]::backdrop,
+  dialog#yakit-map-panel.yakit-panel--closing,
+  dialog#yakit-map-panel.yakit-panel--closing::backdrop { animation: none; }
+  #yakit-map-panel * { transition: none !important; }
+}

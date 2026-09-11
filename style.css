@@ -1,0 +1,7 @@
+/* 复用纪实的主题、导航滑块和动效，窗口与卡片样式限定在地图内。 */
+@import url('../ST-YaKit-chat/shared/theme/tokens.css');
+@import url('../ST-YaKit-chat/shared/ui/navigation.css');
+@import url('../ST-YaKit-chat/styles/motion.css');
+@import url('./styles/panel.css');
+@import url('./styles/content.css');
+@import url('./styles/preferences.css');

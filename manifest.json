@@ -1,0 +1,12 @@
+{
+  "display_name": "YaKit-绘界",
+  "loading_order": 100,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "yafaya",
+  "version": "0.1.6",
+  "homePage": "https://github.com/git-yafaya/ST-YaKit-map",
+  "minimum_client_version": "1.14.0"
+}

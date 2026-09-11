@@ -1,0 +1,92 @@
+/* 设置字段和分段选项沿用纪实的排列与尺寸。 */
+#yakit-map-panel .yakit-preferences-section { display: flex; flex-direction: column; min-width: 0; gap: 8px; }
+#yakit-map-panel .yakit-preferences-section .field-label { margin: 0; font-size: 13px; font-weight: 600; color: var(--yakit-text); }
+#yakit-map-panel .yakit-preferences-notice { margin: 0; font-size: 12px; line-height: 1.6; color: var(--yakit-text-sub); }
+#yakit-map-panel .yakit-navigation-style-field { margin-top: 4px; }
+#yakit-map-panel .yakit-navigation-style-option { display: inline-flex; position: relative; align-items: center; justify-content: center; }
+#yakit-map-panel .yakit-navigation-style-option > input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+#yakit-map-panel .yakit-navigation-style-option:has(:focus-visible) { outline: 2px solid var(--yakit-accent); outline-offset: 2px; }
+#yakit-map-panel .yakit-navigation-style-option:has(> input:checked) { background: #FFFFFF; color: #35372F; box-shadow: 0 1px 4px rgba(53, 55, 47, 0.12); }
+
+/* 下拉浮层仍留在地图 DOM 内，进入顶层后继续继承当前主题。 */
+#yakit-map-panel .yakit-select-trigger,
+#yakit-map-panel .yakit-select-menu > button {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  margin: 0;
+  padding: 10px 32px 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--yakit-input);
+  color: var(--yakit-text);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color .16s ease;
+}
+#yakit-map-panel .yakit-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 16px;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+#yakit-map-panel .yakit-select-menu {
+  box-sizing: border-box;
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid var(--yakit-border);
+  border-radius: 8px;
+  background: var(--yakit-card);
+  color: var(--yakit-text);
+  overflow-y: auto;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, .12), 0 8px 10px -6px rgba(0, 0, 0, .06);
+}
+#yakit-map-panel .yakit-select-menu:popover-open { animation: yakit-map-select-enter .16s ease-out; }
+#yakit-map-panel .yakit-select-menu > button { display: block; background: transparent; }
+#yakit-map-panel .yakit-select-menu > button:hover,
+#yakit-map-panel .yakit-select-menu > button:focus-visible { background: rgba(83, 126, 88, .08); outline: none; }
+#yakit-map-panel .yakit-select-menu > button[aria-selected="true"] { color: var(--yakit-accent); font-weight: 600; }
+#yakit-map-panel .yakit-select-menu > button[aria-selected="true"]::after { content: '✓'; position: absolute; right: 12px; }
+#yakit-map-panel .yakit-select-trigger:focus-visible { outline: 2px solid var(--yakit-accent); outline-offset: 2px; }
+
+/* 副 API 与提示词先保留入口排布，禁用控件维持统一状态。 */
+#yakit-map-panel .yakit-api-config-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+#yakit-map-panel .yakit-api-config-toolbar > button { min-height: 40px; white-space: nowrap; }
+#yakit-map-panel .yakit-api-config-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+#yakit-map-panel .yakit-api-config-card { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 12px 14px; text-align: left; font: inherit; color: var(--yakit-text); overflow-wrap: anywhere; }
+#yakit-map-panel .yakit-btn-primary { padding: 10px 22px; border: none; border-radius: 14px; background: var(--yakit-accent); color: #FFFFFF; font-size: 13px; font-weight: 600; }
+#yakit-map-panel button:disabled { opacity: .5; cursor: default; }
+
+/* 浅色的选中和悬浮配色与纪实一致；其他主题使用公共变量。 */
+#yakit-map-panel.yakit-theme-light .yakit-navigation-style-option:has(> input:checked) { background: var(--yakit-accent-soft); color: var(--yakit-accent); box-shadow: none; }
+#yakit-map-panel.yakit-theme-light .yakit-select-menu > button:hover,
+#yakit-map-panel.yakit-theme-light .yakit-select-menu > button:focus-visible,
+#yakit-map-panel.yakit-theme-light .yakit-select-menu > button[aria-selected="true"] { background: var(--yakit-accent-soft); }
+#yakit-map-panel.yakit-theme-light .yakit-select-trigger:not(:disabled):hover { background: #E8ECF2; }
+#yakit-map-panel.yakit-theme-light .yakit-select-menu { scrollbar-color: #929BA8 transparent; }
+
+@keyframes yakit-map-select-enter {
+  from { opacity: 0; translate: 0 -4px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@media (max-width: 600px) {
+  #yakit-map-panel .yakit-api-config-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #yakit-map-panel .yakit-select-menu:popover-open { animation: none; }
+}

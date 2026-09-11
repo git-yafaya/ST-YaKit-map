@@ -1,0 +1,32 @@
+# 本地需求、配色与设计文档
+*需求*
+*配色*
+*[Dd][Ee][Ss][Ii][Gg][Nn]*
+
+# 本地测试文件
+tests/
+*.test.*
+*.spec.*
+
+# 本地依赖与缓存
+node_modules/
+.cache/
+coverage/
+
+# 本地凭据与环境配置
+.env
+.env.*
+*.local
+
+# 日志
+*.log
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini

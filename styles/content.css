@@ -1,0 +1,52 @@
+/* 固定地图卡片和设置抽屉共用纪实的阅读间距与圆角。 */
+#yakit-map-panel .yakit-card {
+  flex-shrink: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--yakit-border);
+  border-radius: 12px;
+  background: var(--yakit-card);
+}
+#yakit-map-panel .yakit-card__header,
+#yakit-map-panel .yakit-card__content { box-sizing: border-box; padding: 14px 16px; }
+#yakit-map-panel .yakit-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+#yakit-map-panel .yakit-card__header:hover { background: var(--yakit-card-hover); }
+#yakit-map-panel .yakit-card__title-wrap,
+#yakit-map-panel .yakit-card__right { display: flex; align-items: center; gap: 10px; min-width: 0; }
+#yakit-map-panel .yakit-card__title { margin: 0; font-size: 14px; font-weight: 600; }
+#yakit-map-panel .yakit-card__badge:empty { display: none; }
+#yakit-map-panel .yakit-card__chevron { color: var(--yakit-text-sub); transition: transform 0.3s ease; }
+#yakit-map-panel .yakit-card--open .yakit-card__chevron { transform: rotate(180deg); }
+#yakit-map-panel .yakit-card__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  border-top: 1px solid transparent;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#yakit-map-panel .yakit-card--open .yakit-card__body { grid-template-rows: 1fr; border-top-color: var(--yakit-border); }
+#yakit-map-panel .yakit-card__clip { min-height: 0; overflow: hidden; }
+#yakit-map-panel .yakit-card__content { display: flex; flex-direction: column; gap: 10px; }
+
+/* 地图常驻填满正文，尺寸由可用空间决定。 */
+#yakit-map-panel .yakit-map-canvas-card { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+#yakit-map-panel .yakit-map-canvas { flex: 1; min-height: 0; align-items: center; justify-content: center; overflow-y: auto; }
+#yakit-map-panel .yakit-map-empty { max-width: 360px; text-align: center; overflow-wrap: anywhere; }
+#yakit-map-panel .yakit-map-empty > .yakit-icon { width: 40px; height: 40px; color: var(--yakit-accent); }
+#yakit-map-panel .yakit-map-empty p { margin: 14px 0 0; font-size: 14px; color: var(--yakit-text-sub); }
+
+@media (max-width: 600px) {
+  #yakit-map-panel .yakit-card__header,
+  #yakit-map-panel .yakit-card__content { padding: 12px; }
+}
