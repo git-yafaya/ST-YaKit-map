@@ -1,5 +1,5 @@
 import { YaKitTheme } from '../../ST-YaKit-chat/shared/theme/theme.js';
-import { createNavigation } from '../../ST-YaKit-chat/shared/ui/navigation.js';
+import { createNavigation, resolveNavigationStyle } from '../../ST-YaKit-chat/shared/ui/navigation.js';
 import { attachDialogMotion } from '../../ST-YaKit-chat/panel/dialog-motion.js';
 import { createMapPage } from './map-page.js';
 import { createPreferencesPanel } from '../settings/preferences-panel.js';
@@ -10,7 +10,11 @@ export function buildMainPanel() {
   root.id = 'yakit-map-panel';
   root.className = 'yakit-panel';
   root.dataset.view = 'map';
-  root.dataset.navigationStyle = 'top';
+  // 自动跟随当前文档的设备类型，手动选择只保留在当前面板。
+  const applyNavigationStyle = value => {
+    root.dataset.navigationStyle = resolveNavigationStyle(value, root.ownerDocument.defaultView.navigator);
+  };
+  applyNavigationStyle('auto');
   root.setAttribute('aria-labelledby', 'yakit-map-title');
   // 每个面板使用自己的主题容器，共用纪实的主题切换方法。
   const theme = { ...YaKitTheme };
@@ -35,14 +39,14 @@ export function buildMainPanel() {
 
   const preferences = createPreferencesPanel({
     theme,
-    onNavigationStyleChange: value => { root.dataset.navigationStyle = value; },
+    onNavigationStyleChange: applyNavigationStyle,
   });
   const views = { map: createMapPage(), settings: preferences.el };
   const tabs = createNavigation({
     idPrefix: 'yakit-map-navigation',
     items: [
-      { value: 'map', label: '地图', panelId: views.map.id },
-      { value: 'settings', label: '设置', panelId: views.settings.id },
+      { value: 'map', label: '地图', icon: '../../ST-YaKit-map/icons/map', panelId: views.map.id },
+      { value: 'settings', label: '设置', icon: 'nav-settings', panelId: views.settings.id },
     ],
     onChange: switchView,
   });

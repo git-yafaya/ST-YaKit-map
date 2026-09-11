@@ -2,6 +2,7 @@
 #yakit-map-panel .yakit-preferences-section { display: flex; flex-direction: column; min-width: 0; gap: 8px; }
 #yakit-map-panel .yakit-preferences-section .field-label { margin: 0; font-size: 13px; font-weight: 600; color: var(--yakit-text); }
 #yakit-map-panel .yakit-preferences-notice { margin: 0; font-size: 12px; line-height: 1.6; color: var(--yakit-text-sub); }
+#yakit-map-panel .yakit-navigation-style { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 #yakit-map-panel .yakit-navigation-style-field { margin-top: 4px; }
 #yakit-map-panel .yakit-navigation-style-option { display: inline-flex; position: relative; align-items: center; justify-content: center; }
 #yakit-map-panel .yakit-navigation-style-option > input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }

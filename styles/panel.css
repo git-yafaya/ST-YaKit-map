@@ -149,6 +149,10 @@ dialog#yakit-map-panel {
   transition: background 0.18s ease, color 0.18s ease;
 }
 #yakit-map-panel .yakit-navigation > .yakit-pill { position: relative; grid-row: 1; }
+/* 上方显示文字，底部图标成功加载后才隐藏文字，加载失败仍可辨认页面。 */
+#yakit-map-panel .yakit-navigation__icon { display: none !important; color: inherit; vertical-align: middle; }
+#yakit-map-panel[data-navigation-style="bottom"] .yakit-navigation__icon:has(> svg) { display: inline-flex !important; }
+#yakit-map-panel[data-navigation-style="bottom"] .yakit-pill:has(> .yakit-navigation__icon > svg) > .yakit-navigation__label { display: none; }
 #yakit-map-panel .yakit-navigation > [aria-selected="true"] { color: #35372F; }
 #yakit-map-panel .yakit-navigation > [aria-selected="false"]:hover { background: var(--yakit-card-hover); }
 

@@ -22,7 +22,11 @@ export function createPreferencesPanel({ theme, onNavigationStyleChange }) {
       <span class="field-label" id="yakit-map-navigation-style-label">导航栏样式</span>
       <div class="yakit-pill-group yakit-segmented yakit-navigation-style" role="radiogroup" aria-labelledby="yakit-map-navigation-style-label">
         <label class="yakit-pill yakit-navigation-style-option">
-          <input type="radio" name="yakit-map-navigation-style" value="top" checked>
+          <input type="radio" name="yakit-map-navigation-style" value="auto" checked>
+          <span>自动</span>
+        </label>
+        <label class="yakit-pill yakit-navigation-style-option">
+          <input type="radio" name="yakit-map-navigation-style" value="top">
           <span>上方</span>
         </label>
         <label class="yakit-pill yakit-navigation-style-option">
